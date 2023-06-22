@@ -1,4 +1,31 @@
-const Table = ({ data }) => {
+import { useState } from "react";
+import EditableCell from "./EditableCell";
+
+const Table = ({ data, totalItems }) => {
+    const editableRows = {};
+
+    for(let i = 1; i <= totalItems; i++) {
+        editableRows[i] = true;
+    }
+
+    const [edit, setEdit] = useState(editableRows);
+    
+    const updateEdit = (id) => {
+        const updatedValue = {};
+        updatedValue[id] = !edit[id];
+        setEdit(edit => ({
+            ...edit,
+            ...updatedValue
+        }))
+    }
+
+    const getEditButton = (id) => {
+        if(edit[id]) {
+            return 'Edit';
+        } else {
+            return 'Done';
+        }
+    }
     return (
         <table className="container">
             <tbody>
@@ -20,11 +47,19 @@ const Table = ({ data }) => {
                             type="checkbox"
                             />
                         </td>
-                        <td>{item.name}</td>
-                        <td>{item.email}</td>
-                        <td>{item.role}</td>
                         <td>
-                            <button>Edit</button>
+                            <EditableCell value={item.name} isDisabled={edit[item.id]} />
+                        </td>
+                        <td>
+                            <EditableCell value={item.email} isDisabled={edit[item.id]} />
+                        </td>
+                        <td>
+                            <EditableCell value={item.role} isDisabled={edit[item.id]} />
+                        </td>
+                        <td>
+                            <button onClick={() => updateEdit(item.id)}>
+                                {getEditButton(item.id)}
+                            </button>
                             <button>Delete</button>
                         </td>
                     </tr>

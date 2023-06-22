@@ -36,18 +36,18 @@ const Users = () => {
                 onChange={(e) => onInputChange(e)}
             />
             {loading && <p>Loading...</p>}
-            {error && <p>{error.message}</p>}
+            {error && <p>{error}</p>}
             {
                 usersData && (
                     <div>
-                        <Table data={search(usersData).slice(indexOfFirstItem, indexOfLastItem)} />
+                        <Table data={search(usersData).slice(indexOfFirstItem, indexOfLastItem)} totalItems={usersData.length} />
                     </div>
                     
                 )
             }
             <div className='flex-container'>
                 <button>Delete Selected</button>
-                <Pagination itemsPerPage={itemsPerPage} totalItems={search(usersData).length} paginate={paginate} currentPage={currentPage}/>
+                { usersData && <Pagination itemsPerPage={itemsPerPage} totalItems={search(usersData).length} paginate={paginate} currentPage={currentPage}/>}
             </div>
         </div>
     )

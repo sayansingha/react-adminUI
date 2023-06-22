@@ -13,7 +13,6 @@ const useMembers = () => {
                 const responseData = await response.json();
                 setUsersData(responseData);
                 setLoading(false);
-                console.log(responseData)
             } catch(error) {
                 setError(error);
                 setLoading(false);
