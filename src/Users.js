@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useMembers from './FetchingData/useMembers';
 import Table from './Table';
 import Pagination from './Pagination';
 const Users = () => {
     const [query, setQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [rows, setRows] = useState([]);
     const itemsPerPage = 10;
     const { usersData, error, loading } = useMembers();
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        setData(usersData);
+    }, [usersData])
+    
 
     const search = (data) => {
         return data.filter(
@@ -27,6 +34,12 @@ const Users = () => {
         setCurrentPage(1)
     }
 
+    const deleteRows = (ids) => {
+        console.log(ids);
+        ids.map((id) => setData(data => data.filter((item) => item.id !== id)))
+        console.log(data)
+    }
+
     return ( 
         <div className='container'>
             <input
@@ -38,16 +51,28 @@ const Users = () => {
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
             {
-                usersData && (
+                data && (
                     <div>
-                        <Table data={search(usersData).slice(indexOfFirstItem, indexOfLastItem)} totalItems={usersData.length} />
+                        <Table 
+                            data={search(data).slice(indexOfFirstItem, indexOfLastItem)} 
+                            totalData={data} 
+                            deleteRows={deleteRows}
+                            setRows={setRows}
+                            currentPage={currentPage}
+                            itemsPerPage={itemsPerPage}
+                            />
                     </div>
                     
                 )
             }
             <div className='flex-container'>
                 <button>Delete Selected</button>
-                { usersData && <Pagination itemsPerPage={itemsPerPage} totalItems={search(usersData).length} paginate={paginate} currentPage={currentPage}/>}
+                { data && <Pagination itemsPerPage={itemsPerPage} 
+                                        totalItems={search(data).length} 
+                                        paginate={paginate} 
+                                        currentPage={currentPage}
+                                        />
+                }
             </div>
         </div>
     )
