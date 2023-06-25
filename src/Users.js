@@ -9,6 +9,7 @@ const Users = () => {
     const itemsPerPage = 10;
     const { usersData, error, loading } = useMembers();
     const [data, setData] = useState(null);
+    const [mainChecked, setMainChecked] = useState({});
 
     useEffect(() => {
         setData(usersData);
@@ -35,9 +36,20 @@ const Users = () => {
     }
 
     const deleteRows = (ids) => {
-        console.log(ids);
         ids.map((id) => setData(data => data.filter((item) => item.id !== id)))
-        console.log(data)
+    }
+
+    console.log(rows);
+
+    const handleDeleteSelected = () => {
+        deleteRows(rows);
+        setRows([]);
+        const totalPages = Math.ceil(data.length / itemsPerPage);
+        for(let i = 1; i <= totalPages; i++) {
+            const newElement = {};
+            newElement[i] = false;
+            setMainChecked((oldData) => ({...oldData, ...newElement}))
+        }
     }
 
     return ( 
@@ -60,13 +72,17 @@ const Users = () => {
                             setRows={setRows}
                             currentPage={currentPage}
                             itemsPerPage={itemsPerPage}
+                            mainChecked={mainChecked}
+                            setMainChecked={setMainChecked}
                             />
                     </div>
                     
                 )
             }
             <div className='flex-container'>
-                <button>Delete Selected</button>
+                <button onClick={handleDeleteSelected}>
+                    Delete Selected
+                </button>
                 { data && <Pagination itemsPerPage={itemsPerPage} 
                                         totalItems={search(data).length} 
                                         paginate={paginate} 

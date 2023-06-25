@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import EditableCell from "./EditableCell";
 
-const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage }) => {
+const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage, mainChecked, setMainChecked }) => {
 
     const [editableRows, setEditableRows] = useState({});
     const [selectedRows, setSelectedRows] = useState({});
-    const [mainChecked, setMainChecked] = useState({});
 
     useEffect(() => {
         for(let i = 0; i < totalData.length; i++) {
@@ -17,15 +16,7 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
         for(let i = 0; i < totalData.length; i++) {
             const newElement = {};
             newElement[totalData[i].id] = false;
-            console.log(newElement);
             setSelectedRows((oldData) => ({...oldData, ...newElement}));
-        }
-
-        const totalPages = Math.ceil(totalData.length / itemsPerPage);
-        for(let i = 1; i <= totalPages; i++) {
-            const newElement = {};
-            newElement[i] = false;
-            setMainChecked((oldData) => ({...oldData, ...newElement}))
         }
     }, [])
     
@@ -48,7 +39,6 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
 
     const deleteRow = (id) => {
         const rowIds = [id];
-        console.log(rowIds);
         deleteRows(rowIds);
     }
 
@@ -61,13 +51,36 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
                 ...updatedSelectedRows
             }))
 
+            if(!mainChecked[currentPage]) {
+                const newElement = [];
+                newElement.push(item.id);
+                setRows(oldData => [...oldData, ...newElement]);
+            } else {
+                setRows(oldData => oldData.filter(row => row!== item.id))
+            }
         })
+
         const newElement = {};
         newElement[currentPage] = !mainChecked[currentPage];
         setMainChecked((oldData) => ({...oldData, ...newElement}))
     }
 
-    const handleSelectedRow = () => {
+    const handleSelectedRow = (id) => {
+
+        if(!selectedRows[id]) {
+            const newElement = [];
+            newElement.push(id);
+            setRows(oldData => [...oldData, ...newElement]);
+        } else {
+            setRows(oldData => oldData.filter(row => row!== id))
+        }
+
+        const updatedSelectedRows = {};
+        updatedSelectedRows[id] = !selectedRows[id];
+        setSelectedRows(selectedRows => ({
+            ...selectedRows,
+            ...updatedSelectedRows
+        }))
 
     }
 
@@ -88,12 +101,12 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
                     <th>Actions</th>
                 </tr>
                 {data.map((item) => (
-                    <tr key={item.id} style={{backgroundColor: 'grey'}}>
+                    <tr key={item.id} style={{backgroundColor: selectedRows[item.id] ? 'grey' : ''}}>
                         <td>
                             <input
                                 type="checkbox"
                                 checked={selectedRows[item.id]}
-                                onChange={handleSelectedRow}
+                                onChange={() => handleSelectedRow(item.id)}
                             />
                         </td>
                         <td>
