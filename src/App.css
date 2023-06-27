@@ -5,4 +5,52 @@
 .flex-container {
   display: flex;
   flex-direction: row;
+  margin-top: 30px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pagination-anchor {
+  background-color: lightgray;
+}
+
+.search-bar {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.text-area {
+  border: none;
+  outline: none;
+  text-align: center;
+}
+
+.delete {
+  border-radius: 8px;
+  background-color: red;
+  color: white;
+  font-size: medium;
+  font-weight: 500;
+  border-color: red;
+}
+
+.icons {
+  font-size: 20px; 
+  cursor: pointer;
+}
+
+.delete-icon {
+  font-size: 20px; 
+  cursor: pointer;
+  color: red;
+}
+
+.pagination-nav {
+  margin-left: 220px; 
+  text-align: center;
+}
+
+.pagination-list {
+  margin: auto;
 }

@@ -18,32 +18,55 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
     }
     
     return (
-        <nav className='container'>
-            <ul className='pagination'>
+        <nav className='pagination-nav'>
+            <ul className='pagination pagination-list'>
                 <li className='page-item'>
-                    <a href='!#' onClick={() => paginate(pageNumbers[0])} className='page-link'>
+                    <a 
+                        href='!#' 
+                        onClick={() => paginate(pageNumbers[0])} 
+                        className='page-link'
+                    >
                         &lt;&lt;
                     </a>
                 </li>
                 <li className='page-item'>
-                    <a href='!#' onClick={() => paginateTo(currentPage - 1)} className='page-link'>
+                    <a 
+                        href='!#' 
+                        onClick={() => paginateTo(currentPage - 1)} 
+                        className='page-link'
+                    >
                         &lt;
                     </a>
                 </li>
                 {pageNumbers.map(number => (
-                    <li key={number} className='page-item'>
-                        <a href='!#' onClick={() => paginate(number)} className='page-link'>
+                    <li 
+                        key={number} 
+                        className='page-item'
+                    >
+                        <a 
+                            href='!#' 
+                            onClick={() => paginate(number)} 
+                            className={currentPage===number ? 'page-link pagination-anchor' : 'page-link'}
+                        >
                             {number}
                         </a>
                     </li>
                 ))}
                 <li className='page-item'>
-                    <a href='!#' onClick={() => paginateTo(currentPage + 1)} className='page-link'>
+                    <a 
+                        href='!#' 
+                        onClick={() => paginateTo(currentPage + 1)} 
+                        className='page-link'
+                    >
                         &gt;
                     </a>
                 </li>
                 <li className='page-item'>
-                    <a href='!#' onClick={() => paginate(pageNumbers[pageNumbers.length - 1])} className='page-link'>
+                    <a 
+                        href='!#' 
+                        onClick={() => paginate(pageNumbers[pageNumbers.length - 1])} 
+                        className='page-link'
+                    >
                         &gt;&gt;
                     </a>
                 </li>

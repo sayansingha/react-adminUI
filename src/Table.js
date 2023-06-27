@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { BiEditAlt } from 'react-icons/bi'
+import { BsCheckCircle } from 'react-icons/bs'
+import { AiFillDelete } from 'react-icons/ai'
 import EditableCell from "./EditableCell";
 
 const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage, mainChecked, setMainChecked }) => {
@@ -31,9 +34,9 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
 
     const getEditButton = (id) => {
         if(editableRows[id]) {
-            return 'Edit';
+            return <BiEditAlt onClick={() => updateEdit(id)} className='icons' />;
         } else {
-            return 'Done';
+            return <BsCheckCircle onClick={() => updateEdit(id)} className='icons' />;
         }
     }
 
@@ -101,7 +104,7 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
                     <th>Actions</th>
                 </tr>
                 {data.map((item) => (
-                    <tr key={item.id} style={{backgroundColor: selectedRows[item.id] ? 'grey' : ''}}>
+                    <tr key={item.id} style={{backgroundColor: selectedRows[item.id] ? 'lightgray' : ''}}>
                         <td>
                             <input
                                 type="checkbox"
@@ -119,10 +122,10 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
                             <EditableCell value={item.role} isDisabled={editableRows[item.id]} />
                         </td>
                         <td>
-                            <button onClick={() => updateEdit(item.id)}>
+                            <div>
                                 {getEditButton(item.id)}
-                            </button>
-                            <button onClick={() => deleteRow(item.id)}>Delete</button>
+                                <AiFillDelete onClick={() => deleteRow(item.id)} className='delete-icon'/>  
+                            </div>
                         </td>
                     </tr>
                 ))}

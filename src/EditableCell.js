@@ -13,7 +13,12 @@ const EditableCell = ({ value, isDisabled }) => {
         }
     }
     return(
-        <input value={cellValue} disabled={isDisabled} onChange={(e) => onChange(e)}/>
+        <input 
+            value={cellValue} 
+            disabled={isDisabled} 
+            onChange={(e) => onChange(e)} 
+            className={isDisabled ? 'text-area' : ''}
+        />
     )
 }
 

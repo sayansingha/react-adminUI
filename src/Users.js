@@ -54,11 +54,13 @@ const Users = () => {
 
     return ( 
         <div className='container'>
+            <div style={{height: '376px'}}>
             <input
                 type='text'
-                placeholder='Search...'
+                placeholder='Search by name, email or role...'
                 value={query}
                 onChange={(e) => onInputChange(e)}
+                className='search-bar'
             />
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
@@ -79,17 +81,19 @@ const Users = () => {
                     
                 )
             }
-            <div className='flex-container'>
-                <button onClick={handleDeleteSelected}>
-                    Delete Selected
-                </button>
-                { data && <Pagination itemsPerPage={itemsPerPage} 
-                                        totalItems={search(data).length} 
-                                        paginate={paginate} 
-                                        currentPage={currentPage}
-                                        />
-                }
             </div>
+            {data && 
+                <div className='flex-container'>
+                    <button onClick={handleDeleteSelected} className='delete'>
+                        Delete Selected
+                    </button>
+                    <Pagination 
+                        itemsPerPage={itemsPerPage} 
+                        totalItems={search(data).length} 
+                        paginate={paginate} 
+                        currentPage={currentPage}
+                    />
+            </div>}
         </div>
     )
 }
