@@ -18,12 +18,15 @@
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+  border-radius: 10px;
+  border: solid 1px lightgray;
 }
 
 .text-area {
   border: none;
   outline: none;
   text-align: center;
+  background-color: white;
 }
 
 .delete {
@@ -53,4 +56,13 @@
 
 .pagination-list {
   margin: auto;
+}
+
+.table-row {
+  background-color: grey;
+  border: solid 1px lightgray;
+}
+
+.table-head-color {
+  color: white;
 }

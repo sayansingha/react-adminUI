@@ -90,7 +90,7 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
     return (
         <table className="container">
             <tbody>
-                <tr>
+                <tr className="table-row">
                     <th>
                         <input
                             type="checkbox"
@@ -98,10 +98,10 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
                             onChange={handleMainChecked}
                         />
                     </th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Actions</th>
+                    <th className="table-head-color">Name</th>
+                    <th className="table-head-color">Email</th>
+                    <th className="table-head-color">Role</th>
+                    <th className="table-head-color">Actions</th>
                 </tr>
                 {data.map((item) => (
                     <tr key={item.id} style={{backgroundColor: selectedRows[item.id] ? 'lightgray' : ''}}>

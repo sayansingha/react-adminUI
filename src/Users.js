@@ -39,6 +39,8 @@ const Users = () => {
         ids.map((id) => setData(data => data.filter((item) => item.id !== id)))
     }
 
+    console.log(rows);
+
     const handleDeleteSelected = () => {
         deleteRows(rows);
         setRows([]);
@@ -48,13 +50,12 @@ const Users = () => {
             newElement[i] = false;
             setMainChecked((oldData) => ({...oldData, ...newElement}))
         }
-        
         setCurrentPage(1);
     }
 
     return ( 
         <div className='container'>
-            <div style={{height: '376px'}}>
+            <div>
             <input
                 type='text'
                 placeholder='Search by name, email or role...'
