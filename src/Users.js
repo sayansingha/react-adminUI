@@ -39,8 +39,6 @@ const Users = () => {
         ids.map((id) => setData(data => data.filter((item) => item.id !== id)))
     }
 
-    console.log(rows);
-
     const handleDeleteSelected = () => {
         deleteRows(rows);
         setRows([]);
@@ -50,6 +48,8 @@ const Users = () => {
             newElement[i] = false;
             setMainChecked((oldData) => ({...oldData, ...newElement}))
         }
+        
+        setCurrentPage(1);
     }
 
     return ( 
