@@ -18,10 +18,9 @@ const Users = () => {
 
     const search = (data) => {
         return data.filter(
-            (item) => item.name.toLowerCase().includes(query) || 
-                        item.email.toLowerCase().includes(query) || 
-                        item.role.toLowerCase().includes(query) ||
-                        item.id.includes(query)
+            (item) => item.name.toLowerCase().includes(query.toLowerCase()) || 
+                        item.email.toLowerCase().includes(query.toLowerCase()) || 
+                        item.role.toLowerCase().includes(query.toLowerCase())
         )
     }
 
@@ -38,8 +37,6 @@ const Users = () => {
     const deleteRows = (ids) => {
         ids.map((id) => setData(data => data.filter((item) => item.id !== id)))
     }
-
-    console.log(rows);
 
     const handleDeleteSelected = () => {
         deleteRows(rows);
@@ -67,6 +64,7 @@ const Users = () => {
             {error && <p>{error}</p>}
             {
                 data && (
+                    search(data).length === 0 ? <h2>No results found!</h2> :
                     <div>
                         <Table 
                             data={search(data).slice(indexOfFirstItem, indexOfLastItem)} 
@@ -83,7 +81,8 @@ const Users = () => {
                 )
             }
             </div>
-            {data && 
+            {data && (
+                search(data).length !== 0 &&
                 <div className='flex-container'>
                     <button onClick={handleDeleteSelected} className='delete'>
                         Delete Selected
@@ -94,7 +93,9 @@ const Users = () => {
                         paginate={paginate} 
                         currentPage={currentPage}
                     />
-            </div>}
+                </div>
+            )
+                }
         </div>
     )
 }

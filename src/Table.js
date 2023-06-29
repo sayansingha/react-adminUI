@@ -86,7 +86,7 @@ const Table = ({ data, totalData, deleteRows, setRows, currentPage, itemsPerPage
         }))
 
     }
-
+    console.log(data);
     return (
         <table className="container">
             <tbody>
